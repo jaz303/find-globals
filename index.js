@@ -57,7 +57,6 @@ function findGlobals(ast) {
                     scanBody(stmt.body);
                     break;
                 default:
-                    console.log(stmt.type);
                     break;
             }
         }
