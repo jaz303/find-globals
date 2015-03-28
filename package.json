@@ -1,0 +1,23 @@
+{
+  "name": "find-globals",
+  "version": "0.0.0",
+  "description": "Find all global declarations in an Esprima AST",
+  "keywords": [],
+  "scripts": {
+    "test": "set -e; for t in test/*; do node $t; done"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "tape": "^3.5.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jaz303/find-globals.git"
+  },
+  "author": "Jason Frame <jason@onehackoranother.com> (http://jasonframe.co.uk)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaz303/find-globals/issues"
+  },
+  "homepage": "http://github.com/jaz303/find-globals"
+}
