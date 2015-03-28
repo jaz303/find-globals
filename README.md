@@ -10,7 +10,7 @@ Get it:
 
 Require it:
 
-	var find-globals = require('find-globals');
+	var findGlobals = require('find-globals');
 
 
 
