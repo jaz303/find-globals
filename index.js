@@ -1,7 +1,6 @@
 module.exports = findGlobals;
 
 // TODO: find implicit globals via assignment without var
-// TODO: var statements in for(...) initializers
 function findGlobals(ast) {
 
     var out = {};
@@ -19,6 +18,16 @@ function findGlobals(ast) {
         return out[name];
     }
 
+    function scanVariableDeclaration(stmt) {
+    	stmt.declarations.forEach(function(decl) {
+    	    var record = makeRecord(decl.id.name);
+    	    record.type = 'var';
+    	    record.ast = decl;
+    	    record.isFunction = !!(decl.init && decl.init.type === 'FunctionExpression');
+    	    record.count++;
+    	});
+    }
+
     function scanBody(body) {
 
         if (body.type === 'BlockStatement') {
@@ -30,17 +39,7 @@ function findGlobals(ast) {
             switch (stmt.type) {
                 // var foo = ...
                 case 'VariableDeclaration':
-                    stmt.declarations.forEach(function(decl) {
-                        var record = makeRecord(decl.id.name);
-                        record.type = 'var';
-                        record.ast = decl;
-                        if (decl.init && decl.init.type === 'FunctionExpression') {
-                            record.isFunction = true;
-                        } else {
-                            record.isFunction = false;
-                        }
-                        record.count++;
-                    });
+           			scanVariableDeclaration(stmt);
                     break;
                 // function foo() { ... }
                 case 'FunctionDeclaration':
@@ -50,8 +49,19 @@ function findGlobals(ast) {
                     record.isFunction = true;
                     record.count++;
                     break;
-                case 'WhileStatement':
                 case 'ForStatement':
+                	if (stmt.init.type === 'VariableDeclaration') {
+                		scanVariableDeclaration(stmt.init);
+                	}
+                	scanBody(stmt.body);
+                	break;
+                case 'ForInStatement':
+                	if (stmt.left.type === 'VariableDeclaration') {
+                		scanVariableDeclaration(stmt.left);
+                	}
+                    scanBody(stmt.body);
+                    break;
+                case 'WhileStatement':
                 case 'DoWhileStatement':
                 case 'ForInStatement':
                     scanBody(stmt.body);

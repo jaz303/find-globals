@@ -8,4 +8,6 @@ var esprima = require('esprima');
 
 var ast = esprima.parse(source);
 
-console.log(findGlobals(ast));
+var globals = findGlobals(ast);
+
+console.log(globals);
