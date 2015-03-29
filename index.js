@@ -19,13 +19,13 @@ function findGlobals(ast) {
     }
 
     function scanVariableDeclaration(stmt) {
-    	stmt.declarations.forEach(function(decl) {
-    	    var record = makeRecord(decl.id.name);
-    	    record.type = 'var';
-    	    record.ast = decl;
-    	    record.isFunction = !!(decl.init && decl.init.type === 'FunctionExpression');
-    	    record.count++;
-    	});
+        stmt.declarations.forEach(function(decl) {
+            var record = makeRecord(decl.id.name);
+            record.type = 'var';
+            record.ast = decl;
+            record.isFunction = !!(decl.init && decl.init.type === 'FunctionExpression');
+            record.count++;
+        });
     }
 
     function scanBody(body) {
@@ -39,7 +39,7 @@ function findGlobals(ast) {
             switch (stmt.type) {
                 // var foo = ...
                 case 'VariableDeclaration':
-           			scanVariableDeclaration(stmt);
+                    scanVariableDeclaration(stmt);
                     break;
                 // function foo() { ... }
                 case 'FunctionDeclaration':
@@ -50,15 +50,15 @@ function findGlobals(ast) {
                     record.count++;
                     break;
                 case 'ForStatement':
-                	if (stmt.init.type === 'VariableDeclaration') {
-                		scanVariableDeclaration(stmt.init);
-                	}
-                	scanBody(stmt.body);
-                	break;
+                    if (stmt.init.type === 'VariableDeclaration') {
+                        scanVariableDeclaration(stmt.init);
+                    }
+                    scanBody(stmt.body);
+                    break;
                 case 'ForInStatement':
-                	if (stmt.left.type === 'VariableDeclaration') {
-                		scanVariableDeclaration(stmt.left);
-                	}
+                    if (stmt.left.type === 'VariableDeclaration') {
+                        scanVariableDeclaration(stmt.left);
+                    }
                     scanBody(stmt.body);
                     break;
                 case 'WhileStatement':
