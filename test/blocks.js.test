@@ -1,0 +1,11 @@
+for (var i = 0; i < 10; ++i) {
+	for (var k in z) {
+		var alpha, beta;
+	}
+}
+
+while (true) {
+	do {
+		var a, b;
+	} while (false);
+}

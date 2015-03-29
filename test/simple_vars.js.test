@@ -1,0 +1,8 @@
+var a, b = 10, c;
+
+foo();
+bar();
+
+var d = 20, e = 30;
+
+var a;

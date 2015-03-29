@@ -1,0 +1,21 @@
+foo();
+baz();
+bleem(1, 2, 3);
+
+var foo = 10, baz;
+
+function foo() {
+	
+}
+
+function bar() {
+	
+}
+
+function baz() {
+	
+}
+
+var baz = function() {
+	
+}
